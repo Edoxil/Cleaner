@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMovement : MonoBehaviour
 {
-    private NavMeshAgent _agent;
-    [SerializeField] private Camera _camera;
+    private NavMeshAgent _agent = null;
+    [SerializeField] private Camera _camera = null;
     private float _cooldown = 0.3f;
+    private bool isStopped = true;
 
     private void Start()
     {
@@ -14,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (isStopped) { return; }
+
         _cooldown -= Time.deltaTime;
 
         if (_cooldown <= 0)
@@ -28,5 +32,13 @@ public class PlayerMovement : MonoBehaviour
             _cooldown = 0.3f;
         }
 
+    }
+    public void StartMoving()
+    {
+        isStopped = false;
+    }
+    public void StopMoving()
+    {
+        isStopped = true;
     }
 }

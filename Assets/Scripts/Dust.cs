@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class Dust : MonoBehaviour
 {
-    [SerializeField] private Transform[] _transforms;
+    [SerializeField] private Transform[] _transforms = null;
+    private BoxCollider _boxCollider = null;
 
-    public void Disolve()
+    private void Start()
     {
+        _boxCollider = GetComponent<BoxCollider>();
+    }
+
+    public void Clear()
+    {
+        _boxCollider.enabled = false;
         foreach (Transform t in _transforms)
         {
             t.DOScale(0.1f, 1f).onComplete += () => { t.DOKill(); Destroy(t.gameObject); };

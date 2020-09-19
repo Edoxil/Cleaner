@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class Detector : MonoBehaviour
 {
+    public UnityEvent DustCleared;
 
     void Update()
     {
@@ -12,7 +14,8 @@ public class Detector : MonoBehaviour
 
             if (hit.transform.TryGetComponent(out Dust dust))
             {
-                dust.Disolve();
+                dust.Clear();
+                DustCleared?.Invoke();
             }
         }
 
