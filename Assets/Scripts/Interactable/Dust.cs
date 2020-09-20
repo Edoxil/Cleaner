@@ -11,6 +11,7 @@ public class Dust : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider>();
     }
 
+    // Обработка события DustCleared от Detector`a
     public void Clear()
     {
         _boxCollider.enabled = false;

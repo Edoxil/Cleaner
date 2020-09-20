@@ -40,16 +40,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // TMP  
-        Debug.Log("DONT FORGET");
-        PlayerPrefs.SetInt("level", 0);
-
-
+        
+        PlayerPrefs.SetInt("level", 0); //  Удалить если нужно сохранять прогресс
         LoadLevel();
     }
 
- 
-
+    // Загрузка префаба уровня по индексу сохраненному в PlayerPrefs.GetInt("level", 0);
     public void LoadLevel()
     {
         if (_levelInstance != null)
@@ -61,16 +57,27 @@ public class GameManager : MonoBehaviour
         currentLevel = levelData[_levelIndex];
         _levelInstance = Instantiate(levelData[_levelIndex].levelPrefab, transform.position, Quaternion.identity, transform);
     }
+
+    // Инкрементируем индекс и загружаем префаб уровня с новым индексом
     public void LoadNextLevel()
     {
         int index = PlayerPrefs.GetInt("level", 0);
         index++;
-        PlayerPrefs.SetInt("level", index);
+        if (index < levelData.Count)
+        {
+            PlayerPrefs.SetInt("level", index);
+        }
+
         _levelIndex = PlayerPrefs.GetInt("level", 0);
         LoadLevel();
     }
+
+    // Загрузить текущий уровень заново
     public void ReloadLevel()
     {
         LoadLevel();
     }
 }
+
+
+

@@ -4,15 +4,21 @@ using UnityEngine.Events;
 public class Detector : MonoBehaviour
 {
     public UnityEvent DustCleared;
+    private RaycastHit _hit;
+    private Ray _ray;
 
+    private void Start()
+    {
+        _ray = new Ray(transform.position, Vector3.down);
+    }
     void Update()
     {
-        RaycastHit hit;
-        Ray ray = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(ray, out hit))
+        _ray = new Ray(transform.position, Vector3.down);
+
+        if (Physics.Raycast(_ray, out _hit))
         {
 
-            if (hit.transform.TryGetComponent(out Dust dust))
+            if (_hit.transform.TryGetComponent(out Dust dust))
             {
                 dust.Clear();
                 DustCleared?.Invoke();

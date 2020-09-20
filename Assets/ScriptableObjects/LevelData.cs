@@ -8,6 +8,4 @@ public class LevelData : ScriptableObject
     public int number;
     public GameObject levelPrefab;
     public List<Dust> dustPrefabs => FindObjectsOfType<Dust>().ToList();
-
-
 }

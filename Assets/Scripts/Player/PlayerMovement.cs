@@ -8,12 +8,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Camera _camera = null;
     private float _cooldown = 0.3f;
     private bool isStopped = true;
+    private RaycastHit _hit;
+    private Ray _ray;
 
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _ray = _camera.ScreenPointToRay(Input.mousePosition);
     }
-
+    // Каждые 0.3 сек указываем путь игроку в текущее положение мыши
     private void Update()
     {
         if (isStopped) { return; }
@@ -23,11 +26,11 @@ public class PlayerMovement : MonoBehaviour
         if (_cooldown <= 0)
         {
 
-            RaycastHit hit;
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+
+            _ray = _camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(_ray, out _hit))
             {
-                _agent.SetDestination(hit.point);
+                _agent.SetDestination(_hit.point);
             }
             _cooldown = 0.3f;
         }

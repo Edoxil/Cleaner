@@ -28,20 +28,27 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    // Если комната чиста на 95% то переходим на слдующий уровень
     public void DustClearedHandler()
     {
         _dustCleared++;
         _gamePlayUI.ProgressBarForward();
         CheckClearStatus();
     }
+
+    // Обработка нажатия кнопки Next в WinScreen
     public void LoadNextLevel()
     {
         _gameManager.LoadNextLevel();
     }
+
+    // Моментальная перезагрузка уровня при столкновении с препятствием
     public void ReloadLevel()
     {
         _gameManager.ReloadLevel();
     }
+
+    // Проверяем насколько чиста комната.
     private void CheckClearStatus()
     {
         if (((float)_dustCount / 100) * 95 <= _dustCleared)
